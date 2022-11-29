@@ -8,8 +8,8 @@ game: main.o grid.o
 main.o: ./main.cpp
 	$(CC) $(FLAGS) ./main.cpp
 
-grid.o : ./grid.h 
-	$(CC) $(FLAGS)  ./grid.h
+grid.o : ./grid.cpp 
+	$(CC) $(FLAGS)  ./grid.cpp
 
 clean:
 	rm -rf $(TARGETS) $(OBJS)
