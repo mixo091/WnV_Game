@@ -3,7 +3,7 @@
 
 int main()
 {
-    Grid g(20, 20);
+    Grid g(50, 50);
     g.display();
     return 0;
 }
