@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "./creatures.h"
 
 
 using namespace std;
@@ -8,20 +9,25 @@ using namespace std;
 
 
 // == tile implementation == /
+struct coordinates
+{
+    int x;
+    int y;
+};
 
 struct tile
 {
 
     char type;
-    //Living* m;
-    int x, y;
+    Creature* being = NULL;
+    coordinates pos;
 
 public:
     tile(char t, int p1, int p2)
     {
         type = t;
-        x = p1;
-        y = p2;
+        pos.x = p1;
+        pos.y = p2;
     }
 };
 
@@ -33,8 +39,9 @@ public:
     vector<vector<tile>> grid;
 
     // Funcionality //
-
+    public:
     Grid(int x, int y);
     void display();
     ~Grid() ;
+    void setBeing(vector<being_coordinates>&, Creature*);
 };

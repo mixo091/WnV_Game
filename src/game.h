@@ -11,28 +11,69 @@ class Game {
 
     public:
 
-    // vector <Vampire> vampires;
-    // vector <WereWolves> werewolves
-    // Avatar avatar
-    //Grid* map;
+    vector <Vampire> vampires;
+    vector <Werewolf> werewolves;
+    vector <being_coordinates> pos_available;
+    //Avatar avatar;
+    Grid* map;
 
-    // stat srtucture { number of w , number of v ,  number potion of a}
+    //stat srtucture { number of w , number of v ,  number potion of a}
 
-    // bool day or night
-
-    /*
+    bool isDay;
     
-        initializeGame(){
+    void getAvailablePostitions(vector<being_coordinates> &vec){
+        being_coordinates p1;
+        p1.x=1;
+        p1.y=3;
+        being_coordinates p2;
+        p2.x=2;
+        p2.y=3;
 
-            1- Create Map.
-            2- Set beings
+        vec.push_back(p1);
+        vec.push_back(p2);
+    }
+
+    void initializeGame(int d1, int d2){
+
+        //Setting grid
+        map = new Grid(d1,d2);
+
+        //Getting available positions
+        getAvailablePostitions(pos_available);
+        cout << "vec = ( " << pos_available.front().x << ", " << pos_available.front().y << " )"<< endl;
+
+        //Creating Beings
+        being_coordinates pv;
+        pv.x=0;
+        pv.y=0;
+        being_coordinates pw;
+        pw.x=0;
+        pw.y=0;
+
+        Vampire v1('V', pv, 1, 1, 1);
+        vampires.push_back(v1);
+        Werewolf w1('W', pw, 1, 1, 1);
+        werewolves.push_back(w1);
+
+        //Set Beings
+        map->setBeing(pos_available, &v1);
+
+        //Setting Beings on the grid
+        map->display();
+        
+    
+        
 
 
 
-        }
+    }
 
+    Game(){
+        initializeGame(50,50);
+    }
 
-        gameEngine()){
+/*
+        gameEngine(){
 
             loop{
 
@@ -47,11 +88,8 @@ class Game {
             }
 
         }
+*/
     
-    
-    
-    
-    */
 
 
 

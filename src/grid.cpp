@@ -62,28 +62,53 @@ Grid::Grid(int x, int y)
     }
 }
 
-
 // -- Grid Display Function --//
-void Grid::display(){
+void Grid::display()
+{
 
-    for (int i = 0; i < d1; i++){cout<<"=="; if(i==d1-1){cout<<"==="<<endl;}}
+    for (int i = 0; i < d1; i++)
+    {
+        cout << "==";
+        if (i == d1 - 1)
+        {
+            cout << "===" << endl;
+        }
+    }
 
     for (int i = 0; i < d1; i++)
     {
         for (int j = 0; j < d2; j++)
         {
-            if(j ==0 ){cout<<"| ";}
+            if (j == 0)
+            {
+                cout << "| ";
+            }
             cout << grid[i][j].type << " ";
             if (j == d2 - 1)
-            {   cout<<"|";
+            {
+                cout << "|";
                 cout << endl;
             }
-
         }
-    }    
-    for (int i = 0; i < d1; i++){cout<<"==";if(i==d1-1){cout<<"==="<<endl;}}
+    }
+    for (int i = 0; i < d1; i++)
+    {
+        cout << "==";
+        if (i == d1 - 1)
+        {
+            cout << "===" << endl;
+        }
+    }
 }
-
 
 //-- Grid Destructor --//
 Grid::~Grid() { cout << "Grid Destroyed" << endl; }
+
+//-- Grid setBeings --//
+void Grid::setBeing(vector<being_coordinates> &vec, Creature *b)
+{
+    being_coordinates temp;
+    temp = vec[0];
+    grid[temp.x][temp.y].being = b;
+    grid[temp.x][temp.y].type = grid[temp.x][temp.y].being->type;
+}

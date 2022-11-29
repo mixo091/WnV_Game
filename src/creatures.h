@@ -1,36 +1,49 @@
+#pragma once
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-class Creatures
+struct being_coordinates
 {
+    int x;
+    int y;
+};
+
+class Creature
+{
+    public:
     char type;
-    int pos1, pos2;
+    being_coordinates position;
     int potions;
     int strength;
     int shield;
 
-    public:
-    Creatures();
-    ~Creatures();
+    Creature(char, being_coordinates, int, int, int);
+    ~Creature();
     virtual void move() = 0;
-    virtual void attack();
-    virtual void heal();
+    //virtual void attack();
+    //virtual void heal();
 };
 
-class Avatar
-{
+// class Avatar
+// {
     
 
+// };
+
+class Vampire: public Creature
+{
+    public:
+    Vampire(char, being_coordinates, int, int, int);
+    ~Vampire();
+    void move();
 };
 
-class Vampires
+class Werewolf: public Creature
 {
-
-};
-
-class Werewolves
-{
-
+    public:
+    Werewolf(char, being_coordinates, int, int, int);
+    ~Werewolf();
+    void move();
 };
