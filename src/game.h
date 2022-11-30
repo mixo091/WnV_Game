@@ -2,6 +2,11 @@
 #include <iostream>
 #include <vector>
 #include "./grid.h"
+#include <conio.h>
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
 
 //Edw ola ta headers. grid beings etc.
 
@@ -34,6 +39,12 @@ class Game {
     }
 
     void initializeGame(int d1, int d2){
+
+
+        // Create Player's Avatar.
+
+        
+
 
         //Setting grid
         map = new Grid(d1,d2);
@@ -68,6 +79,68 @@ class Game {
 
     }
 
+
+
+    void gamePlay(){
+
+        int move = 0 ;
+        bool game_over = false;
+        while (!game_over)
+        {
+            // Catch Player's Move.
+
+            switch((c=getch())) {
+            case KEY_UP:
+                cout << endl << "Up" << endl;//key up
+                break;
+            case KEY_DOWN:
+                cout << endl << "Down" << endl;   // key down
+                break;
+            case KEY_LEFT:
+                cout << endl << "Left" << endl;  // key left
+                break;
+            case KEY_RIGHT:
+                cout << endl << "Right" << endl;  // key right
+                break;
+            default:
+                cout << endl << "null" << endl;  // not arrow
+                break;
+
+            }
+            
+
+
+
+
+        }
+        
+
+
+
+
+
+        return;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     Game(){
         initializeGame(50,50);
     }
@@ -89,6 +162,9 @@ class Game {
 
         }
 */
+    
+
+
     
 
 

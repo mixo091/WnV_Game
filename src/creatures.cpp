@@ -41,4 +41,22 @@ Werewolf::~Werewolf()
 void Werewolf::move()
 {
     cout << "move" << endl;
+
+}
+
+
+
+
+Avatar::Avatar(char t, being_coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
+{
+    cout << "Avatar created!" << endl;
+}
+
+Avatar::~Avatar()
+{
+}
+
+void Avatar::move()
+{
+    cout << "move" << endl;
 }

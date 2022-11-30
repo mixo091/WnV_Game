@@ -47,3 +47,14 @@ class Werewolf: public Creature
     ~Werewolf();
     void move();
 };
+
+
+class Avatar:public Creature{
+    public:
+
+        Avatar(char,being_coordinates,int,int,int);
+        ~Avatar();
+        void move();
+
+
+};
