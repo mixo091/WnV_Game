@@ -4,18 +4,19 @@
 
 using namespace std;
 
-Creature::Creature(char t, being_coordinates pos, int pots, int stren, int shi)
+Creature::Creature(Grid*g ,char t, coordinates pos, int pots, int stren, int shi)
 {
     this->type = t;
     this->position = pos;
     this->potions = pots;
     this->strength = stren;
     this->shield = shi;
+    this->map = g;
 }
 
 Creature::~Creature() {}
 
-Vampire::Vampire(char t, being_coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
+Vampire::Vampire(Grid* g ,char t, coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
 {
     cout << "Vampire created!" << endl;
 }
@@ -29,7 +30,7 @@ void Vampire::move()
     cout << "move" << endl;
 }
 
-Werewolf::Werewolf(char t, being_coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
+Werewolf::Werewolf(Grid* g ,char t, coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
 {
     cout << "Werewolf created!" << endl;
 }
@@ -47,7 +48,7 @@ void Werewolf::move()
 
 
 
-Avatar::Avatar(char t, being_coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
+Avatar::Avatar(Grid* g , char t, coordinates pos, int pots, int stren, int shi) : Creature(g,t, pos, pots, stren, shi)
 {
     cout << "Avatar created!" << endl;
 }

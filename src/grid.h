@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "./creatures.h"
+#include "coordinates.h"
 
 
 using namespace std;
@@ -9,11 +10,7 @@ using namespace std;
 
 
 // == tile implementation == /
-struct coordinates
-{
-    int x;
-    int y;
-};
+
 
 struct tile
 {
@@ -37,11 +34,14 @@ class Grid
 public:
     int d1, d2;
     vector<vector<tile>> grid;
+    vector<coordnates> land_coor;
 
     // Funcionality //
     public:
     Grid(int x, int y);
     void display();
     ~Grid() ;
-    void setBeing(vector<being_coordinates>&, Creature*);
+    void setBeing(vector<coordinates>&, Creature*);
+    void set_being(Creature*)
+    coordinates get_available_tile_coordinates();
 };

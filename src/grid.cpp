@@ -28,36 +28,24 @@ char getLandscape()
 
 // -- Grid Constructor -- //
 
-Grid::Grid(int x, int y)
+Grid::Grid(int x, int y ,)
 {
     this->d1 = x;
     this->d2 = y;
-
-    int per = 0.6 * (x * y);
-    cout << per << endl;
-
-    // initialize random seed.
     srand(time(NULL));
 
     for (int i = 0; i < x; i++)
     {
         vector<tile> sub_vec;
         grid.push_back(sub_vec);
-
+        vector <coordinates> available_positions;
+        char terrain;
         for (int j = 0; j < y; j++)
         {
-
-            tile new_tile(getLandscape(), i, j);
+            terrain = getLandscape();
+            if (terrain == land){  coordinates t{i,j} ; land_coor.push_back(t); available_positions.push_back(t);}
+            tile new_tile(terrain, i, j);
             grid[i].push_back(new_tile);
-        }
-    }
-
-    for (int i = 0; i < x; i++)
-    {
-        for (int j = 0; j < y; j++)
-        {
-
-            // cout << grid[i][j].type << "[ " << grid[i][j].x << "," << grid[i][j].y << " ]" << endl;
         }
     }
 }
@@ -105,10 +93,39 @@ void Grid::display()
 Grid::~Grid() { cout << "Grid Destroyed" << endl; }
 
 //-- Grid setBeings --//
-void Grid::setBeing(vector<being_coordinates> &vec, Creature *b)
+void Grid::setBeing(vector<coordinates> &vec, Creature *b)
 {
-    being_coordinates temp;
+    coordinates temp;
     temp = vec[0];
     grid[temp.x][temp.y].being = b;
     grid[temp.x][temp.y].type = grid[temp.x][temp.y].being->type;
+}
+
+
+// Get random available tile for Creature Placement.
+coordinates Grid:get_available_tile_coordinates(){
+
+    vector<coordinates> available_tiles ; 
+    for ( unsigned int i = 0; i < this->land_coor.size(); i++ ){
+        if(grid[this->land_coor[ i ].x][this->land_coor[i].y].being == NULL){
+            available_tiles.push_back(land_coor[i]);
+        }
+    }
+    random_tile = rand % available_tiles.size();
+    coordinates tile{ available_tiles[random_tile].x, available_tiles[random_tile].y};
+    available_tiles.clear();
+    return tile;
+
+}
+
+
+void Grid::set_being(Creature* being){
+
+    // Get available tile.
+    /*A tile is available when it is land and it has no other Creature on it*/
+    coordinates available_pos{0,0};
+    available_pos = this->get_available_tile_coordinates();
+
+   
+
 }

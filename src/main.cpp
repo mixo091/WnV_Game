@@ -9,6 +9,6 @@ int main()
     // Grid g(50, 50);
     // g.display();
     Game g1;
-
+    g1.gamePlay();
     return 0;
 }

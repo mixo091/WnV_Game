@@ -1,41 +1,35 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "coordinates.h"
+#include "grid.h"
 
 using namespace std;
 
-struct being_coordinates
-{
-    int x;
-    int y;
-};
 
 class Creature
 {
     public:
+    Grid* map;
     char type;
-    being_coordinates position;
+    coordinates position;
     int potions;
     int strength;
     int shield;
 
-    Creature(char, being_coordinates, int, int, int);
+    Creature(Grid* ,char, coordinates, int, int, int);
     ~Creature();
     virtual void move() = 0;
     //virtual void attack();
     //virtual void heal();
 };
 
-// class Avatar
-// {
-    
 
-// };
 
 class Vampire: public Creature
 {
     public:
-    Vampire(char, being_coordinates, int, int, int);
+    Vampire(Grid* ,char, coordinates, int, int, int);
     ~Vampire();
     void move();
 };
@@ -43,7 +37,7 @@ class Vampire: public Creature
 class Werewolf: public Creature
 {
     public:
-    Werewolf(char, being_coordinates, int, int, int);
+    Werewolf(Grid* ,char, coordinates, int, int, int);
     ~Werewolf();
     void move();
 };
@@ -52,7 +46,7 @@ class Werewolf: public Creature
 class Avatar:public Creature{
     public:
 
-        Avatar(char,being_coordinates,int,int,int);
+        Avatar(Grid* ,char,coordinates,int,int,int);
         ~Avatar();
         void move();
 
