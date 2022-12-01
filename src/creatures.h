@@ -3,6 +3,7 @@
 #include <vector>
 #include "coordinates.h"
 #include "grid.h"
+#include <string>
 
 
 using namespace std;
@@ -54,6 +55,7 @@ class Avatar:public Creature{
         Avatar(Grid*,char,coordinates,int,int,int);
         ~Avatar();
         void move();
+        void move1(string);
 
 
 };

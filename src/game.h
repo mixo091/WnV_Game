@@ -38,6 +38,7 @@ class Game {
         available_pos = map->get_available_tile_coordinates();
         map->grid[available_pos.x][available_pos.y].being = b;
         map->grid[available_pos.x][available_pos.y].type =  b->type;
+        b->set_coordinates(available_pos);
 
 
     }
@@ -100,6 +101,7 @@ class Game {
 
     void gamePlay(){
 
+        
         int move = 0 ;
         bool game_over = false;
 
@@ -111,6 +113,9 @@ class Game {
                 putchar (move);
             case W:
                 cout << endl << "Up" << endl;//key up
+                avatar->move1("Up");
+                ClearScreen();
+                map->display();
                 // Move player Up if possible
                 //move others 
                 //Clean Map
@@ -147,7 +152,7 @@ class Game {
         }
         
 
-        */
+        
 
 
 

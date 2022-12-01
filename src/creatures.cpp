@@ -2,6 +2,7 @@
 #include <vector>
 #include "./creatures.h"
 #include "./grid.h"
+#include <string>
 
 using namespace std;
 
@@ -67,7 +68,43 @@ Avatar::~Avatar()
 {
 }
 
-void Avatar::move()
-{
-    cout << "move" << endl;
+
+
+void Avatar::move(){ }
+
+
+
+
+
+void Avatar::move1(string direction){
+
+    coordinates avatar_pos = get_coordinates();
+    if ( direction == "Up"){
+
+            cout << "pathsa"<<endl;
+
+            coordinates wanted_move{avatar_pos.x-1,avatar_pos.y};
+            cout<<"i am "<< avatar_pos.x <<" , "<<avatar_pos.y<<endl;
+            cout <<"want:"<< wanted_move.x << " , " << wanted_move.y <<endl;
+            //bool legal_move = map->grid[wanted_move.x][wanted_move.y].get_availability();
+            if (1){
+                map->grid[avatar_pos.x][avatar_pos.y].type=' ';
+                set_coordinates(wanted_move);
+                map->grid[wanted_move.x][wanted_move.y].being = this;
+                map->grid[wanted_move.x][wanted_move.y].type = this->type;
+                
+
+            }
+
+
+    }
+
+
+    
+
+
+
+
+
+    
 }
