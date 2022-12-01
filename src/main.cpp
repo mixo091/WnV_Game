@@ -9,7 +9,7 @@ int main()
 
    // coordinates x{0,0};
     //Creature* C = new Vampire('D',x,1,1,1);
-    Game g;
+    Game game;
     //game.gamePlay();
     return 0;
 }

@@ -22,7 +22,7 @@ class Game {
     Grid* map;
     bool isDay;
       Game(){
-        initializeGame(50,50);
+        initializeGame(20,20);
     }
 
 
@@ -51,21 +51,44 @@ class Game {
         // Create Grid-Map.
         map = new Grid(d1,d2);
 
+        map->display();
+
         // Create Player's Avatar.
         coordinates avatar_pos {0,0};
         this->avatar= new Avatar('A',avatar_pos,1,1,1);
 
+
+        //avatar_pos = map->get_available_tile_coordinates();
+        cout<<avatar_pos.x<<" , "<<avatar_pos.y<<endl;
+        //map->setBeing(avatar_pos, avatar);
+        map->set_being(avatar);
+        
+
+        
+
+
         //Create Vampires.
-        int vampires_num = 20;
+        int vampires_num = 10;
         for (int  i = 0; i < vampires_num; i++)
         {
             coordinates vampire_pos {0,0};
             Vampire v('V', vampire_pos, i, 1, 1);
             vampires.push_back(v);
-            cout<<vampires[i].potions<<endl;
+            map->set_being(&vampires[i]);
+            //cout<<vampires[i].potions<<endl;
+        }
+
+        int werewolves_num = 10;
+        for (int  i = 0; i < werewolves_num; i++)
+        {
+            coordinates werewolves_pos {0,0};
+            Werewolf w('W', werewolves_pos, i, 1, 1);
+            werewolves.push_back(w);
+            map->set_being(&werewolves[i]);
+            //cout<<werewolves[i].potions<<endl;
         }
         
-
+        map->display();
         
         /*
 

@@ -41,7 +41,7 @@ public:
     Grid(int x, int y);
     void display();
     ~Grid() ;
-    void setBeing(vector<coordinates>&, Creature*);
+    void setBeing(coordinates, Creature*);
     void set_being(Creature*);
     coordinates get_available_tile_coordinates();
 };

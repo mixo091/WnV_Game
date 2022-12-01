@@ -93,10 +93,10 @@ void Grid::display()
 Grid::~Grid() { cout << "Grid Destroyed" << endl; }
 
 //-- Grid setBeings --//
-void Grid::setBeing(vector<coordinates> &vec, Creature *b)
+void Grid::setBeing(coordinates pos, Creature *b)
 {
     coordinates temp;
-    temp = vec[0];
+    temp = pos;
     grid[temp.x][temp.y].being = b;
     grid[temp.x][temp.y].type = grid[temp.x][temp.y].being->type;
 }

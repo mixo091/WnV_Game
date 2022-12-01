@@ -21,6 +21,8 @@ class Creature
 
         Creature(char, coordinates, int, int, int);
         ~Creature();
+        void set_coordinates(coordinates);
+        coordinates get_coordinates();
         virtual void move() = 0;
         //virtual void attack();
         //virtual void heal();

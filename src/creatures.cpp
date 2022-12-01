@@ -15,6 +15,14 @@ Creature::Creature(char t, coordinates pos, int pots, int stren, int shi)
     //this->map = g;
 }
 
+void Creature::set_coordinates(coordinates pos){
+    this->position = pos;
+}
+
+coordinates Creature::get_coordinates(){
+    return this->position;
+}
+
 Creature::~Creature() {}
 
 Vampire::Vampire(char t, coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
