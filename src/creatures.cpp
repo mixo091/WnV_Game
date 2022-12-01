@@ -5,14 +5,15 @@
 
 using namespace std;
 
-Creature::Creature(char t, coordinates pos, int pots, int stren, int shi)
+
+Creature::Creature(Grid* g ,char t, coordinates pos, int pots, int stren, int shi)
 {
     this->type = t;
     this->position = pos;
     this->potions = pots;
     this->strength = stren;
     this->shield = shi;
-    //this->map = g;
+    this->map = g;
 }
 
 void Creature::set_coordinates(coordinates pos){
@@ -25,9 +26,9 @@ coordinates Creature::get_coordinates(){
 
 Creature::~Creature() {}
 
-Vampire::Vampire(char t, coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
+Vampire::Vampire(Grid* g,char t, coordinates pos, int pots, int stren, int shi) : Creature(g,t, pos, pots, stren, shi)
 {
-    cout << "Vampire created!" << endl;
+    //cout << "Vampire created!" << endl;
 }
 
 Vampire::~Vampire()
@@ -39,9 +40,9 @@ void Vampire::move()
     cout << "move" << endl;
 }
 
-Werewolf::Werewolf(char t, coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
+Werewolf::Werewolf(Grid* g,char t, coordinates pos, int pots, int stren, int shi) : Creature(g,t, pos, pots, stren, shi)
 {
-    cout << "Werewolf created!" << endl;
+   // cout << "Werewolf created!" << endl;
 }
 
 Werewolf::~Werewolf()
@@ -57,9 +58,9 @@ void Werewolf::move()
 
 
 
-Avatar::Avatar( char t, coordinates pos, int pots, int stren, int shi) : Creature(t, pos, pots, stren, shi)
+Avatar::Avatar( Grid* g,char t, coordinates pos, int pots, int stren, int shi) : Creature(g,t, pos, pots, stren, shi)
 {
-    cout << "Avatar created!" << endl;
+    //cout << "Avatar created!" << endl;
 }
 
 Avatar::~Avatar()

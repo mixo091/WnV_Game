@@ -6,7 +6,7 @@
 
 
 using namespace std;
-
+class Creature;
 
 
 // == tile implementation == /
@@ -31,17 +31,16 @@ public:
 class Grid
 {
 
-public:
+    public:
     int d1, d2;
     vector<vector<tile>> grid;
     vector<coordinates> land_coor;
 
     // Funcionality //
-    public:
+    
     Grid(int x, int y);
     void display();
     ~Grid() ;
-    void setBeing(coordinates, Creature*);
     void set_being(Creature*);
     coordinates get_available_tile_coordinates();
 };

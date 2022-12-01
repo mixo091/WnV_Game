@@ -2,10 +2,11 @@
 #include <iostream>
 #include <vector>
 #include "coordinates.h"
+#include "grid.h"
 
 
 using namespace std;
-
+class Grid;
 
 class Creature
 {
@@ -17,9 +18,9 @@ class Creature
         int potions;
         int strength;
         int shield;
-        // Grid* map;
+        Grid* map;
 
-        Creature(char, coordinates, int, int, int);
+        Creature(Grid*,char, coordinates, int, int, int);
         ~Creature();
         void set_coordinates(coordinates);
         coordinates get_coordinates();
@@ -33,7 +34,7 @@ class Creature
 class Vampire: public Creature
 {
     public:
-    Vampire(char, coordinates, int, int, int);
+    Vampire(Grid*,char, coordinates, int, int, int);
     ~Vampire();
     void move();
 };
@@ -41,7 +42,7 @@ class Vampire: public Creature
 class Werewolf: public Creature
 {
     public:
-    Werewolf(char, coordinates, int, int, int);
+    Werewolf(Grid*,char, coordinates, int, int, int);
     ~Werewolf();
     void move();
 };
@@ -50,7 +51,7 @@ class Werewolf: public Creature
 class Avatar:public Creature{
     public:
 
-        Avatar(char,coordinates,int,int,int);
+        Avatar(Grid*,char,coordinates,int,int,int);
         ~Avatar();
         void move();
 
