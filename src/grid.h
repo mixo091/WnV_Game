@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <vector>
-#include "./creatures.h"
 #include "coordinates.h"
+#include "./creatures.h"
 
 
 using namespace std;
@@ -16,7 +16,7 @@ struct tile
 {
 
     char type;
-    Creature* being = NULL;
+    Creature* being  = NULL;
     coordinates pos;
 
 public:
@@ -34,7 +34,7 @@ class Grid
 public:
     int d1, d2;
     vector<vector<tile>> grid;
-    vector<coordnates> land_coor;
+    vector<coordinates> land_coor;
 
     // Funcionality //
     public:
@@ -42,6 +42,6 @@ public:
     void display();
     ~Grid() ;
     void setBeing(vector<coordinates>&, Creature*);
-    void set_being(Creature*)
+    void set_being(Creature*);
     coordinates get_available_tile_coordinates();
 };

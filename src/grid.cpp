@@ -28,7 +28,7 @@ char getLandscape()
 
 // -- Grid Constructor -- //
 
-Grid::Grid(int x, int y ,)
+Grid::Grid(int x, int y)
 {
     this->d1 = x;
     this->d2 = y;
@@ -103,15 +103,16 @@ void Grid::setBeing(vector<coordinates> &vec, Creature *b)
 
 
 // Get random available tile for Creature Placement.
-coordinates Grid:get_available_tile_coordinates(){
+coordinates Grid::get_available_tile_coordinates(){
 
     vector<coordinates> available_tiles ; 
+
     for ( unsigned int i = 0; i < this->land_coor.size(); i++ ){
         if(grid[this->land_coor[ i ].x][this->land_coor[i].y].being == NULL){
             available_tiles.push_back(land_coor[i]);
         }
     }
-    random_tile = rand % available_tiles.size();
+    int random_tile = rand() % available_tiles.size();
     coordinates tile{ available_tiles[random_tile].x, available_tiles[random_tile].y};
     available_tiles.clear();
     return tile;
@@ -119,13 +120,14 @@ coordinates Grid:get_available_tile_coordinates(){
 }
 
 
-void Grid::set_being(Creature* being){
+void Grid::set_being(Creature* b){
 
     // Get available tile.
     /*A tile is available when it is land and it has no other Creature on it*/
     coordinates available_pos{0,0};
     available_pos = this->get_available_tile_coordinates();
-
+    grid[available_pos.x][available_pos.y].being = b;
+    grid[available_pos.x][available_pos.y].type =  b->type;
    
 
 }

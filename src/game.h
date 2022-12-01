@@ -9,9 +9,8 @@
 #define D 100
 #define A 97
 
-//Edw ola ta headers. grid beings etc.
 
-
+//-- Game Class Implementation. --//
 
 class Game {
 
@@ -19,14 +18,22 @@ class Game {
 
     vector <Vampire> vampires;
     vector <Werewolf> werewolves;
-    vector <coordinates> pos_available;
-    //Avatar avatar;
+    Avatar* avatar;
     Grid* map;
+    bool isDay;
+      Game(){
+        initializeGame(50,50);
+    }
+
+
+
+  
+    ~Game(){ };
 
     //stat srtucture { number of w , number of v ,  number potion of a}
 
-    bool isDay;
-    
+
+    /*
     void getAvailablePostitions(vector<coordinates> &vec){
         coordinates p1;
         p1.x=1;
@@ -37,7 +44,7 @@ class Game {
 
         vec.push_back(p1);
         vec.push_back(p2);
-    }
+    }*/
 
     void initializeGame(int d1, int d2){
 
@@ -46,7 +53,21 @@ class Game {
 
         // Create Player's Avatar.
         coordinates avatar_pos {0,0};
-        Avatar avatar(map,'A',avatar_pos,1,1,1);
+        this->avatar= new Avatar('A',avatar_pos,1,1,1);
+
+        //Create Vampires.
+        int vampires_num = 20;
+        for (int  i = 0; i < vampires_num; i++)
+        {
+            coordinates vampire_pos {0,0};
+            Vampire v('V', vampire_pos, i, 1, 1);
+            vampires.push_back(v);
+            cout<<vampires[i].potions<<endl;
+        }
+        
+
+        
+        /*
 
         // Set Avatar on the map.
         map->set_being(&avatar);
@@ -78,7 +99,7 @@ class Game {
         map->display();
         
     
-        
+        */
 
 
 
@@ -93,6 +114,7 @@ class Game {
 
     void gamePlay(){
 
+        /*
         int move = 0 ;
         bool game_over = false;
         while (game_over == false)
@@ -137,53 +159,15 @@ class Game {
         }
         
 
-
+        */
 
 
 
         return;
     }
 
+ };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    Game(){
-        initializeGame(50,50);
-    }
-
-/*
-        gameEngine(){
-
-            loop{
-
-                1- set day or night based on a cond
-                2- move being randomly in the map
-                3- fights and healing ( player based on night day cond)
-                4- check for deaths remove corpses
-                5- update stat structure.
-                6- ckeck game's ending condition to break.
-
-
-            }
-
-        }
-*/
     
 
 
@@ -195,4 +179,3 @@ class Game {
 
 
 
-};

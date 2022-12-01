@@ -6,9 +6,10 @@
 
 int main()
 {
-    // Grid g(50, 50);
-    // g.display();
-    Game g1;
-    g1.gamePlay();
+
+   // coordinates x{0,0};
+    //Creature* C = new Vampire('D',x,1,1,1);
+    Game g;
+    //game.gamePlay();
     return 0;
 }

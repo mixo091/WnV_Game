@@ -11,11 +11,11 @@ main.o: ./main.cpp
 grid.o : ./grid.cpp
 	$(CC) $(FLAGS)  ./grid.cpp
 
-creatures.o : ./creatures.cpp
+creatures.o : ./creatures.cpp 
 	$(CC) $(FLAGS)  ./creatures.cpp
 
 game.o : ./game.cpp
 	$(CC) $(FLAGS)  ./game.cpp
 
 clean:
-	rm -rf $(TARGETS) $(OBJS)
+	rm -rf $(TARGETS) $(OBJS) game
