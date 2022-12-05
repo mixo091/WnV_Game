@@ -120,35 +120,31 @@ class Game {
             switch((move=getchar())) {
                 //putchar (move);
             case W:
-                cout << endl << "Up" << endl;//key up
                 avatar->move_up();
-                ClearScreen();
-                map->display();
+                //beings[7]->move();
                 // Move player Up if possible
                 //move others 
                 //Clean Map
                 //redisplay map()
-
                 break;
             case S:
-                cout << endl << "Down" << endl;   // key down
                 avatar->move_down();
-                ClearScreen();
-                map->display();
+                //beings[7]->move();
                 break;
             case A:
-                cout << endl << "Left" << endl;  // key left
                 avatar->move_left();
-                ClearScreen();
-                map->display();
+                //beings[7]->move();
                 break;
             case D:
-                cout << endl << "enter" << endl;  // key right
                 avatar->move_right();
-                ClearScreen();
-                map->display();
+                //beings[7]->move();
                 break;
             case ENTER:
+                for(unsigned int i=0; i<beings.size()-1; i++){
+                    beings[i]->move();
+                }
+                ClearScreen();
+                map->display();
                 break;
 
             case PAUSE:

@@ -28,11 +28,20 @@ coordinates Creature::get_coordinates()
 
 bool Creature::is_legal_move(coordinates pos)
 {
-    if ((map->grid[pos.x][pos.y].type == ' ') & (map->grid[pos.x][pos.y].being == NULL))
+    if ((pos.x < 0 || pos.x > map->d1 - 1) || (pos.y < 0 || pos.y > map->d2 - 1))
+    {
+        return false;
+    }
+
+    if ((map->grid[pos.x][pos.y].type == ' ') && (map->grid[pos.x][pos.y].being == NULL))
     {
         return true;
     }
     return false;
+}
+
+void Creature::move()
+{
 }
 
 void Creature::move_to_tile(coordinates pos)
@@ -82,7 +91,27 @@ Vampire::~Vampire()
 
 void Vampire::move()
 {
-    cout << "move" << endl;
+    int prob = rand() % 5;
+    cout << "rand = " << prob << endl;
+    switch (prob)
+    {
+    case 0:
+        move_up();
+        break;
+    case 1:
+        move_down();
+        break;
+    case 2:
+        move_left();
+        break;
+    case 3:
+        move_right();
+        break;
+    case 4:
+        // Stays still
+        break;
+    }
+    return;
 }
 
 Werewolf::Werewolf(Grid *g, char t, coordinates pos, int pots, int stren, int shi) : Creature(g, t, pos, pots, stren, shi)
@@ -96,7 +125,27 @@ Werewolf::~Werewolf()
 
 void Werewolf::move()
 {
-    cout << "move" << endl;
+    int prob = rand() % 5;
+    cout << "rand = " << prob << endl;
+    switch (prob)
+    {
+    case 0:
+        move_up();
+        break;
+    case 1:
+        move_down();
+        break;
+    case 2:
+        move_left();
+        break;
+    case 3:
+        move_right();
+        break;
+    case 4:
+        // Stays still
+        break;
+    }
+    return;
 }
 
 Avatar::Avatar(Grid *g, char t, coordinates pos, int pots, int stren, int shi) : Creature(g, t, pos, pots, stren, shi)
@@ -106,29 +155,4 @@ Avatar::Avatar(Grid *g, char t, coordinates pos, int pots, int stren, int shi) :
 
 Avatar::~Avatar()
 {
-}
-
-void Avatar::move() {}
-
-void Avatar::move1(string direction)
-{
-
-    coordinates avatar_pos = get_coordinates();
-    if (direction == "Up")
-    {
-
-        cout << "pathsa" << endl;
-
-        coordinates wanted_move{avatar_pos.x - 1, avatar_pos.y};
-        cout << "i am " << avatar_pos.x << " , " << avatar_pos.y << endl;
-        cout << "want:" << wanted_move.x << " , " << wanted_move.y << endl;
-        // bool legal_move = map->grid[wanted_move.x][wanted_move.y].get_availability();
-        if (1)
-        {
-            map->grid[avatar_pos.x][avatar_pos.y].type = ' ';
-            set_coordinates(wanted_move);
-            map->grid[wanted_move.x][wanted_move.y].being = this;
-            map->grid[wanted_move.x][wanted_move.y].type = this->type;
-        }
-    }
 }

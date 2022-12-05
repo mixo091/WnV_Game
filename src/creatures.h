@@ -29,7 +29,7 @@ class Creature
         void move_down();
         void move_left();
         void move_right();
-        virtual void move() = 0;
+        virtual void move();
         //virtual void attack();
         //virtual void heal();
 };
@@ -38,7 +38,7 @@ class Creature
 
 class Vampire: public Creature
 {
-    public:
+    public: //Kinountai kai diagonia
     Vampire(Grid*,char, coordinates, int, int, int);
     ~Vampire();
     void move();
@@ -58,8 +58,4 @@ class Avatar:public Creature{
 
         Avatar(Grid*,char,coordinates,int,int,int);
         ~Avatar();
-        void move();
-        void move1(string);
-
-
 };

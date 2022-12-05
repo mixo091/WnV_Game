@@ -14,9 +14,9 @@ char getLandscape()
 {
     double val = (double)rand() / RAND_MAX;
     char terrain;
-    if (val < 0.6) // land.
+    if (val < 0.8) // land.
         terrain = land;
-    else if (val < 0.2) // trees.
+    else if (val < 0.9) // trees.
         terrain = tree;
     else // water.
         terrain = water;
