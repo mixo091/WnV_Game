@@ -16,7 +16,7 @@ struct tile
 {
 
     char type;
-    Creature* being  = NULL;
+    Creature* being;
     coordinates pos;
 
 public:
@@ -25,6 +25,7 @@ public:
         type = t;
         pos.x = p1;
         pos.y = p2;
+        being = NULL;
     }
 };
 
@@ -40,6 +41,7 @@ class Grid
     
     Grid(int x, int y);
     void display();
+    void display_tiles();
     ~Grid() ;
     void set_being(Creature*);
     coordinates get_available_tile_coordinates();

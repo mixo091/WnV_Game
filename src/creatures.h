@@ -11,9 +11,7 @@ class Grid;
 
 class Creature
 {
-    public:
-
-  
+    public: 
         char type;
         coordinates position;
         int potions;
@@ -23,8 +21,14 @@ class Creature
 
         Creature(Grid*,char, coordinates, int, int, int);
         ~Creature();
+        bool is_legal_move(coordinates);
         void set_coordinates(coordinates);
         coordinates get_coordinates();
+        void move_to_tile(coordinates);
+        void move_up();
+        void move_down();
+        void move_left();
+        void move_right();
         virtual void move() = 0;
         //virtual void attack();
         //virtual void heal();

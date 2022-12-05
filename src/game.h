@@ -19,8 +19,9 @@ class Game {
 
     public:
 
-    vector <Vampire> vampires;
-    vector <Werewolf> werewolves;
+    //vector <Vampire> vampires;
+    //vector <Werewolf> werewolves;
+    vector<Creature*> beings;
     Avatar* avatar;
     Grid* map;
     bool isDay;
@@ -37,10 +38,8 @@ class Game {
         coordinates available_pos{0,0};
         available_pos = map->get_available_tile_coordinates();
         map->grid[available_pos.x][available_pos.y].being = b;
-        map->grid[available_pos.x][available_pos.y].type =  b->type;
         b->set_coordinates(available_pos);
-
-
+        cout << map->grid[available_pos.x][available_pos.y].being->type << endl;
     }
 
 
@@ -68,27 +67,36 @@ class Game {
 
 
         //Create Vampires.
-        int vampires_num = 10;
+        Creature* temp;
+        int vampires_num = 5;
         for (int  i = 0; i < vampires_num; i++)
         {
             coordinates vampire_pos {0,0};
-            Vampire v(map,'V', vampire_pos, i, 1, 1);
-            vampires.push_back(v);
-            set_being(&vampires[i]);
+            //Vampire v(map,'V', vampire_pos, i, 1, 1);
+            temp = new Vampire(map,'V', vampire_pos, i, 1, 1);
+            beings.push_back(temp);
+            set_being(beings[i]);
+            //map-> display();
+            //map-> display_tiles();
             //cout<<vampires[i].potions<<endl;
         }
 
-        int werewolves_num = 10;
-        for (int  i = 0; i < werewolves_num; i++)
+        int werewolves_num = 5;
+        for (int  i = vampires_num; i < vampires_num+werewolves_num; i++)
         {
             coordinates werewolves_pos {0,0};
-            Werewolf w(map,'W', werewolves_pos, i, 1, 1);
-            werewolves.push_back(w);
-            set_being(&werewolves[i]);
+            //Werewolf w(map,'W', werewolves_pos, i, 1, 1);
+            temp = new Werewolf(map,'W', werewolves_pos, i, 1, 1);
+            beings.push_back(temp);
+            set_being(beings[i]);
+            //map-> display();
+            //map-> display_tiles();
             //cout<<werewolves[i].potions<<endl;
         }
         
+        //map->display_tiles();
         map->display();
+        
         
     }
 
@@ -110,10 +118,10 @@ class Game {
 
             // Catch Player's Move.
             switch((move=getchar())) {
-                putchar (move);
+                //putchar (move);
             case W:
                 cout << endl << "Up" << endl;//key up
-                avatar->move1("Up");
+                avatar->move_up();
                 ClearScreen();
                 map->display();
                 // Move player Up if possible
@@ -124,12 +132,21 @@ class Game {
                 break;
             case S:
                 cout << endl << "Down" << endl;   // key down
+                avatar->move_down();
+                ClearScreen();
+                map->display();
                 break;
             case A:
                 cout << endl << "Left" << endl;  // key left
+                avatar->move_left();
+                ClearScreen();
+                map->display();
                 break;
             case D:
                 cout << endl << "enter" << endl;  // key right
+                avatar->move_right();
+                ClearScreen();
+                map->display();
                 break;
             case ENTER:
                 break;
