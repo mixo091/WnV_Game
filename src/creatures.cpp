@@ -89,9 +89,37 @@ Vampire::~Vampire()
 {
 }
 
+
+void Vampire::move_up_right()
+{
+    coordinates wanted_move{position.x - 1, position.y+1};
+    move_to_tile(wanted_move);
+}
+
+void Vampire::move_down_right()
+{
+    coordinates wanted_move{position.x + 1, position.y+1};
+    move_to_tile(wanted_move);
+}
+
+void Vampire::move_up_left()
+{
+    coordinates wanted_move{position.x-1, position.y - 1};
+    move_to_tile(wanted_move);
+}
+
+void Vampire::move_down_left()
+{
+    coordinates wanted_move{position.x+1, position.y-1};
+    move_to_tile(wanted_move);
+}
+
+
+
+
 void Vampire::move()
 {
-    int prob = rand() % 5;
+    int prob = rand() % 9;
     cout << "rand = " << prob << endl;
     switch (prob)
     {
@@ -109,6 +137,18 @@ void Vampire::move()
         break;
     case 4:
         // Stays still
+        break;
+    case 5:
+        move_down_left();
+        break;
+    case 6:
+        move_up_left();
+        break;
+    case 7:
+        move_down_right();
+        break;
+    case 8:
+        move_up_right();
         break;
     }
     return;

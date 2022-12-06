@@ -41,6 +41,10 @@ class Vampire: public Creature
     public: //Kinountai kai diagonia
     Vampire(Grid*,char, coordinates, int, int, int);
     ~Vampire();
+    void move_up_left();
+    void move_up_right();
+    void move_down_left();
+    void move_down_right();
     void move();
 };
 
