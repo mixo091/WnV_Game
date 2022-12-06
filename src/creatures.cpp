@@ -3,6 +3,7 @@
 #include "./creatures.h"
 #include "./grid.h"
 #include <string>
+#define Health 6
 
 using namespace std;
 
@@ -10,9 +11,10 @@ Creature::Creature(Grid *g, char t, coordinates pos, int pots, int stren, int sh
 {
     this->type = t;
     this->position = pos;
-    this->potions = pots;
-    this->strength = stren;
-    this->shield = shi;
+    this->potions = rand()%3;
+    this->strength = 1+rand()%3;
+    this->shield = 1+rand()%2;
+    this->health = Health;
     this->map = g;
 }
 
@@ -120,7 +122,6 @@ void Vampire::move_down_left()
 void Vampire::move()
 {
     int prob = rand() % 9;
-    cout << "rand = " << prob << endl;
     switch (prob)
     {
     case 0:
@@ -166,7 +167,6 @@ Werewolf::~Werewolf()
 void Werewolf::move()
 {
     int prob = rand() % 5;
-    cout << "rand = " << prob << endl;
     switch (prob)
     {
     case 0:
@@ -190,7 +190,7 @@ void Werewolf::move()
 
 Avatar::Avatar(Grid *g, char t, coordinates pos, int pots, int stren, int shi) : Creature(g, t, pos, pots, stren, shi)
 {
-    // cout << "Avatar created!" << endl;
+    this->magic_potions = 1;
 }
 
 Avatar::~Avatar()

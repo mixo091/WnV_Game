@@ -17,6 +17,7 @@ class Creature
         int potions;
         int strength;
         int shield;
+        int health;
         Grid* map;
 
         Creature(Grid*,char, coordinates, int, int, int);
@@ -30,6 +31,8 @@ class Creature
         void move_left();
         void move_right();
         virtual void move();
+
+        
         //virtual void attack();
         //virtual void heal();
 };
@@ -59,6 +62,7 @@ class Werewolf: public Creature
 
 class Avatar:public Creature{
     public:
+        int magic_potions;
 
         Avatar(Grid*,char,coordinates,int,int,int);
         ~Avatar();

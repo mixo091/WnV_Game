@@ -25,11 +25,33 @@ class Game {
     Avatar* avatar;
     Grid* map;
     bool isDay;
-      Game(){
-        initializeGame(20,20);
+    Game(int d1 ,  int d2 , char team){
+        initializeGame(d1,d2,team);
     }
   
     ~Game(){ };
+
+
+    void printStats(){
+        ClearScreen();
+        cout<<"++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+        cout<<"|                    GAME STATS                  |"<<endl;
+        cout<<"++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+        for ( unsigned int i=0; i< beings.size()/2;i++){
+            cout<<"V["<<to_string(i)<<"]"<<"::"<< "Hp: "<<"|Pwr: " <<"|Def: "<<"|Potions: "<<"|Dead: "<<"|"<<endl;
+        }
+        for ( unsigned int i=beings.size()/2; i<beings.size();i++){
+            cout<<"W["<<to_string(i)<<"]"<<"::"<< "Hp: "<<"|Pwr: " <<"|Def: "<<"|Potions: "<<"|Dead: "<<"|"<<endl;
+        }
+
+
+
+
+
+
+
+    }
+
 
     void set_being(Creature* b){
 
@@ -45,61 +67,43 @@ class Game {
 
 
 
-    void initializeGame(int d1, int d2){
+    void initializeGame(int d1, int d2 , char team){
 
         // Create Grid-Map.
         map = new Grid(d1,d2);
-
         map->display();
 
         // Create Player's Avatar.
         coordinates avatar_pos {0,0};
-        this->avatar= new Avatar(map,'A',avatar_pos,1,1,1);
-
-
+        this->avatar= new Avatar(map,team,avatar_pos,1,1,1);
         //avatar_pos = map->get_available_tile_coordinates();
         cout<<avatar_pos.x<<" , "<<avatar_pos.y<<endl;
         //map->setBeing(avatar_pos, avatar);
         set_being(avatar);
-        
 
-        
-
-
-        //Create Vampires.
+        //--Create Vampires.
         Creature* temp;
-        int vampires_num = 5;
+        int max_creatures = (d1*d2)/15;
+        int num_of_creatures =4+rand()%(max_creatures-3);
+        int vampires_num = num_of_creatures/2;
         for (int  i = 0; i < vampires_num; i++)
         {
             coordinates vampire_pos {0,0};
-            //Vampire v(map,'V', vampire_pos, i, 1, 1);
-            temp = new Vampire(map,'V', vampire_pos, i, 1, 1);
+            temp = new Vampire(map,'B', vampire_pos, i, 1, 1);
             beings.push_back(temp);
             set_being(beings[i]);
-            //map-> display();
-            //map-> display_tiles();
-            //cout<<vampires[i].potions<<endl;
         }
-
-        int werewolves_num = 5;
-        for (int  i = vampires_num; i < vampires_num+werewolves_num; i++)
+        //-- Create Werewolves.
+        for (int  i = vampires_num; i < vampires_num*2; i++)
         {
             coordinates werewolves_pos {0,0};
-            //Werewolf w(map,'W', werewolves_pos, i, 1, 1);
-            temp = new Werewolf(map,'W', werewolves_pos, i, 1, 1);
+            temp = new Werewolf(map,'L', werewolves_pos, i, 1, 1);
             beings.push_back(temp);
             set_being(beings[i]);
-            //map-> display();
-            //map-> display_tiles();
-            //cout<<werewolves[i].potions<<endl;
         }
-        
-        //map->display_tiles();
         map->display();
-        
-        
+              
     }
-
 
     // Function to Clear Game Screen.
     void ClearScreen() {
@@ -113,34 +117,33 @@ class Game {
         int move = 0 ;
         bool game_over = false;
 
+      
+
         while (game_over == false)
         {
+            
+
+
+
 
             // Catch Player's Move.
             switch((move=getchar())) {
-                //putchar (move);
             case W:
                 avatar->move_up();
-                //beings[7]->move();
-                // Move player Up if possible
-                //move others 
-                //Clean Map
-                //redisplay map()
                 break;
             case S:
                 avatar->move_down();
-                //beings[7]->move();
                 break;
             case A:
                 avatar->move_left();
-                //beings[7]->move();
+
                 break;
             case D:
                 avatar->move_right();
-                //beings[7]->move();
+  
                 break;
             case ENTER:
-                for(unsigned int i=0; i<beings.size()-1; i++){
+                for(unsigned int i=0; i<beings.size(); i++){
                     beings[i]->move();
                 }
                 ClearScreen();
@@ -148,7 +151,8 @@ class Game {
                 break;
 
             case PAUSE:
-                //Display Stats & Menu.
+                printStats();
+                break;
 
             default:
                 break;
