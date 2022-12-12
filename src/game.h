@@ -5,6 +5,7 @@
 #include "./creatures.h"
 #include <stdio.h>
 #include <unistd.h>
+#include<bits/stdc++.h>
 #define W 119
 #define S 115
 #define D 100
@@ -41,12 +42,10 @@ class Game {
         cout<<"Avatar potions : "<<avatar->get_potions()<<endl;
 
 
-        for ( unsigned int i=0; i< beings.size()/2;i++){
-            cout<<"V["<<to_string(i)<<"]"<<"::"<< "Hp: "<<beings[i]->get_health()<<"|Pwr: "<<beings[i]->get_strength() <<"|Def: "<<beings[i]->get_shield()<<"|Potions: "<<beings[i]->get_potions()<<"|Dead: "<<beings[i]->is_dead()<<"|"<<endl;
+        for ( unsigned int i=0; i< beings.size();i++){
+            cout<<beings[i]->get_team()<<"["<<to_string(i)<<"]"<<"::"<< "Hp: "<<beings[i]->get_health()<<"|Pwr: "<<beings[i]->get_strength() <<"|Def: "<<beings[i]->get_shield()<<"|Potions: "<<beings[i]->get_potions()<<"|Dead: "<<beings[i]->is_dead()<<"|"<<endl;
         }
-        for ( unsigned int i=beings.size()/2; i<beings.size();i++){
-            cout<<"W["<<to_string(i)<<"]"<<"::"<< "Hp: "<<beings[i]->get_health()<<"|Pwr: "<<beings[i]->get_strength() <<"|Def: "<<beings[i]->get_shield()<<"|Potions: "<<beings[i]->get_potions()<<"|Dead: "<<beings[i]->is_dead()<<"|"<<endl;
-        }
+    
 
 
 
@@ -76,7 +75,23 @@ class Game {
         cout << map->grid[available_pos.x][available_pos.y].being->type << endl;
     }
 
-
+    int getIndex(Creature* b)
+    {
+        auto it = find(beings.begin(), beings.end(), b);
+    
+        // If element was found
+        if (it != beings.end()) 
+        {
+        
+            // calculating the index
+            // of K
+            int index = it - beings.begin();
+            return index;
+        }
+        else {
+          return -1;
+        }
+    }
 
 
     void initializeGame(int d1, int d2 , char team){
@@ -121,6 +136,63 @@ class Game {
         map->display();
               
     }
+
+
+    void BeingsEngagement(){
+
+        vector<Creature*> neighbors;
+
+        for(unsigned int i=0; i<beings.size(); i++){
+        
+            neighbors = beings[i]->get_neighbors();
+
+            for ( unsigned int j = 0 ; j < neighbors.size(); j++){
+
+                cout<<"ser" << neighbors[j]->get_strength()<<endl;
+
+                //Is he on my team ?
+                if ( beings[i]->get_team() != neighbors[j]->get_team()){
+
+                    
+
+                    if ( beings[i]->get_strength() >= neighbors[j]->get_strength() && beings[i]->isDead == false){
+                        //Chance to evade..
+                        //neighbors[j]->dec_health( beings[i]->get_strength() - neighbors[j]->get_shield());
+                        beings[i]->attack(neighbors[j]);
+                        if(neighbors[j]->isCorpse()){
+                            int pos = getIndex(neighbors[j]);
+                            beings.erase( beings.begin() + pos);
+
+                        }
+                        
+
+
+                    }
+
+                }else{
+                    
+
+                }
+
+            }
+
+            cout<<"size:" <<neighbors.size()<<endl;
+
+            neighbors.clear();
+        }
+
+        return;
+    }
+
+
+
+
+
+
+
+
+
+
 
     // Function to Clear Game Screen.
     void ClearScreen() {
@@ -167,6 +239,7 @@ class Game {
                 for(unsigned int i=0; i<beings.size(); i++){
                     beings[i]->move();
                 }
+                BeingsEngagement();
                 ClearScreen();
                 map->display();
                 break;

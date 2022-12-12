@@ -47,6 +47,33 @@ void Creature::move()
 {
 }
 
+
+
+vector<Creature*> Creature::get_neighbors(){
+
+    coordinates neighbor_tiles [] =  { {position.x-1,position.y} , {position.x+1,position.y} , {position.x,position.y+1} , {position.x,position.y-1} };
+     vector<Creature*> neighbors;
+
+     cout<<"ok1"<<endl;
+
+    for ( int i = 0 ; i < 4 ; i++){
+
+        if(!((neighbor_tiles[i].x < 0 || neighbor_tiles[i].x > map->d1 - 1) || (neighbor_tiles[i].y < 0 || neighbor_tiles[i].y > map->d2 - 1))  &&  map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being != NULL ){
+            cout<<"exee geitona" <<endl;
+            neighbors.push_back(map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being);
+            //cout<<"ser " <<neighbors[i]->get_strength()<<endl;
+        } 
+    }
+
+    cout<<"ok2"<<endl;
+    
+    return neighbors;
+
+}
+
+
+char Creature::get_team(){return type;}
+
 void Creature::move_to_tile(coordinates pos)
 {
     if (is_legal_move(pos))
@@ -86,12 +113,25 @@ void Creature::move_right()
 
 int Creature::get_health(){return health;}
 void Creature::inc_health(int x){ health +=x;}
-void Creature::dec_health(int x){health-=x;}
+void Creature::dec_health(int x){if ( x > 0){health-=x;}}
 int Creature::get_shield(){return shield;}
 int Creature::get_strength(){return strength;}
 int Creature::get_potions(){return potions;}
 void Creature::dec_potions(){ potions -=1;}
 bool Creature::is_dead(){return isDead;}
+void Creature::attack(Creature* b){
+    b->dec_health( this->get_strength() - b->get_shield());
+};
+bool Creature :: isCorpse(){ 
+    if(health<=0){
+        isDead = true;
+
+        map->grid[position.x][position.y].being = NULL;
+        return true ;
+        
+    }
+        
+    return false;}
 
 
 Creature::~Creature() {}

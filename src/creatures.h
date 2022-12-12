@@ -39,7 +39,11 @@ class Creature
         void inc_health(int x);
         void dec_health(int x);
         void dec_potions();   
-        bool is_dead();     
+        bool is_dead();   
+        char get_team();
+        vector<Creature*> get_neighbors(); 
+        void attack(Creature*); 
+        bool isCorpse();
         //virtual void attack();
         //virtual void heal();
 };
