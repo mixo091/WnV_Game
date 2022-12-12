@@ -10,6 +10,7 @@ using namespace std;
 Creature::Creature(Grid *g, char t, coordinates pos, int pots, int stren, int shi)
 {
     this->type = t;
+    this->isDead = false;
     this->position = pos;
     this->potions = rand()%3;
     this->strength = 1+rand()%3;
@@ -35,7 +36,7 @@ bool Creature::is_legal_move(coordinates pos)
         return false;
     }
 
-    if ((map->grid[pos.x][pos.y].type == ' ') && (map->grid[pos.x][pos.y].being == NULL))
+    if ((map->grid[pos.x][pos.y].type == ' ') && (map->grid[pos.x][pos.y].being == NULL) && (map->grid[pos.x][pos.y].hasPotion == false ))
     {
         return true;
     }
@@ -79,6 +80,19 @@ void Creature::move_right()
     coordinates wanted_move{position.x, position.y + 1};
     move_to_tile(wanted_move);
 }
+
+
+
+
+int Creature::get_health(){return health;}
+void Creature::inc_health(int x){ health +=x;}
+void Creature::dec_health(int x){health-=x;}
+int Creature::get_shield(){return shield;}
+int Creature::get_strength(){return strength;}
+int Creature::get_potions(){return potions;}
+void Creature::dec_potions(){ potions -=1;}
+bool Creature::is_dead(){return isDead;}
+
 
 Creature::~Creature() {}
 
@@ -190,8 +204,38 @@ void Werewolf::move()
 
 Avatar::Avatar(Grid *g, char t, coordinates pos, int pots, int stren, int shi) : Creature(g, t, pos, pots, stren, shi)
 {
-    this->magic_potions = 1;
+    this->potions = 1;
 }
+
+
+bool Avatar::is_legal_move(coordinates pos)
+{
+    if ((pos.x < 0 || pos.x > map->d1 - 1) || (pos.y < 0 || pos.y > map->d2 - 1))
+    {
+        return false;
+    }
+
+    if ((map->grid[pos.x][pos.y].type == ' ') && (map->grid[pos.x][pos.y].being == NULL)  )
+    {
+        return true;
+    }
+    return false;
+}
+
+void Avatar::inc_potions(){
+    potions++;
+}
+
+bool Avatar::potion_check(){
+    if (map->grid[position.x][position.y].hasPotion){
+        inc_potions();
+        map->grid[position.x][position.y].hasPotion = false;
+        return true;
+    }
+    return false;
+}
+
+
 
 Avatar::~Avatar()
 {

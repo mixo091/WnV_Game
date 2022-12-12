@@ -37,11 +37,15 @@ class Game {
         cout<<"++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
         cout<<"|                    GAME STATS                  |"<<endl;
         cout<<"++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
+
+        cout<<"Avatar potions : "<<avatar->get_potions()<<endl;
+
+
         for ( unsigned int i=0; i< beings.size()/2;i++){
-            cout<<"V["<<to_string(i)<<"]"<<"::"<< "Hp: "<<"|Pwr: " <<"|Def: "<<"|Potions: "<<"|Dead: "<<"|"<<endl;
+            cout<<"V["<<to_string(i)<<"]"<<"::"<< "Hp: "<<beings[i]->get_health()<<"|Pwr: "<<beings[i]->get_strength() <<"|Def: "<<beings[i]->get_shield()<<"|Potions: "<<beings[i]->get_potions()<<"|Dead: "<<beings[i]->is_dead()<<"|"<<endl;
         }
         for ( unsigned int i=beings.size()/2; i<beings.size();i++){
-            cout<<"W["<<to_string(i)<<"]"<<"::"<< "Hp: "<<"|Pwr: " <<"|Def: "<<"|Potions: "<<"|Dead: "<<"|"<<endl;
+            cout<<"W["<<to_string(i)<<"]"<<"::"<< "Hp: "<<beings[i]->get_health()<<"|Pwr: "<<beings[i]->get_strength() <<"|Def: "<<beings[i]->get_shield()<<"|Potions: "<<beings[i]->get_potions()<<"|Dead: "<<beings[i]->is_dead()<<"|"<<endl;
         }
 
 
@@ -50,6 +54,14 @@ class Game {
 
 
 
+    }
+
+
+
+    void spawn_potion(){
+        coordinates available_pos{0,0};
+        available_pos = map->get_available_tile_coordinates();
+        map->grid[available_pos.x][available_pos.y].hasPotion = true;
     }
 
 
@@ -73,6 +85,7 @@ class Game {
         map = new Grid(d1,d2);
         map->display();
 
+        spawn_potion();
         // Create Player's Avatar.
         coordinates avatar_pos {0,0};
         this->avatar= new Avatar(map,team,avatar_pos,1,1,1);
@@ -80,6 +93,7 @@ class Game {
         cout<<avatar_pos.x<<" , "<<avatar_pos.y<<endl;
         //map->setBeing(avatar_pos, avatar);
         set_being(avatar);
+        
 
         //--Create Vampires.
         Creature* temp;
@@ -101,6 +115,9 @@ class Game {
             beings.push_back(temp);
             set_being(beings[i]);
         }
+
+
+
         map->display();
               
     }
@@ -130,16 +147,20 @@ class Game {
             switch((move=getchar())) {
             case W:
                 avatar->move_up();
+                if ( avatar->potion_check() == true ){ spawn_potion();}
                 break;
             case S:
                 avatar->move_down();
+                if ( avatar->potion_check() == true ){ spawn_potion();}
                 break;
             case A:
                 avatar->move_left();
+                if ( avatar->potion_check() == true ){ spawn_potion();}
 
                 break;
             case D:
                 avatar->move_right();
+                if ( avatar->potion_check() == true ){ spawn_potion();}
   
                 break;
             case ENTER:

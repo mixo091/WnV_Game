@@ -18,11 +18,12 @@ class Creature
         int strength;
         int shield;
         int health;
+        bool isDead;
         Grid* map;
 
         Creature(Grid*,char, coordinates, int, int, int);
         ~Creature();
-        bool is_legal_move(coordinates);
+        virtual bool is_legal_move(coordinates);
         void set_coordinates(coordinates);
         coordinates get_coordinates();
         void move_to_tile(coordinates);
@@ -31,8 +32,14 @@ class Creature
         void move_left();
         void move_right();
         virtual void move();
-
-        
+        int get_health();
+        int get_shield();
+        int get_potions();
+        int get_strength();
+        void inc_health(int x);
+        void dec_health(int x);
+        void dec_potions();   
+        bool is_dead();     
         //virtual void attack();
         //virtual void heal();
 };
@@ -62,8 +69,12 @@ class Werewolf: public Creature
 
 class Avatar:public Creature{
     public:
-        int magic_potions;
+        
 
         Avatar(Grid*,char,coordinates,int,int,int);
         ~Avatar();
+        bool is_legal_move(coordinates);
+        bool potion_check();
+        void inc_potions();
+        
 };

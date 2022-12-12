@@ -16,6 +16,7 @@ struct tile
 {
 
     char type;
+    bool hasPotion;
     Creature* being;
     coordinates pos;
 
@@ -26,6 +27,7 @@ public:
         pos.x = p1;
         pos.y = p2;
         being = NULL;
+        hasPotion = false;
     }
 };
 

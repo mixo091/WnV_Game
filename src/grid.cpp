@@ -77,8 +77,12 @@ void Grid::display()
                 cout << "| ";
             }
             if (grid[i][j].being == NULL)
-            {
-                cout << grid[i][j].type << " ";
+            {   
+                if (grid[i][j].hasPotion){
+                    cout <<"P ";
+                }else{
+                    cout << grid[i][j].type << " ";
+                }
             }
             else
             {
@@ -126,7 +130,7 @@ coordinates Grid::get_available_tile_coordinates()
 
     for (unsigned int i = 0; i < this->land_coor.size(); i++)
     {
-        if (grid[this->land_coor[i].x][this->land_coor[i].y].being == NULL)
+        if (grid[this->land_coor[i].x][this->land_coor[i].y].being == NULL && !grid[this->land_coor[i].x][this->land_coor[i].y].hasPotion)
         {
             available_tiles.push_back(land_coor[i]);
         }
