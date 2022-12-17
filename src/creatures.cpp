@@ -6,17 +6,20 @@
 #define Health 6
 
 using namespace std;
+int counter = 0;
 
 Creature::Creature(Grid *g, char t, coordinates pos, int pots, int stren, int shi)
 {
     this->type = t;
     this->isDead = false;
+    this->id = counter;
     this->position = pos;
     this->potions = rand()%3;
     this->strength = 1+rand()%3;
     this->shield = 1+rand()%2;
     this->health = Health;
     this->map = g;
+    counter++;
 }
 
 void Creature::set_coordinates(coordinates pos)
@@ -58,7 +61,7 @@ vector<Creature*> Creature::get_neighbors(){
 
     for ( int i = 0 ; i < 4 ; i++){
 
-        if(!((neighbor_tiles[i].x < 0 || neighbor_tiles[i].x > map->d1 - 1) || (neighbor_tiles[i].y < 0 || neighbor_tiles[i].y > map->d2 - 1))  &&  map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being != NULL ){
+        if(!((neighbor_tiles[i].x < 0 || neighbor_tiles[i].x > map->d1 - 1) || (neighbor_tiles[i].y < 0 || neighbor_tiles[i].y > map->d2 - 1))  &&  map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being != NULL && map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being->type != 'W' && map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being->type != 'V'){
             cout<<"exee geitona" <<endl;
             neighbors.push_back(map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being);
             //cout<<"ser " <<neighbors[i]->get_strength()<<endl;
@@ -120,8 +123,21 @@ int Creature::get_potions(){return potions;}
 void Creature::dec_potions(){ potions -=1;}
 bool Creature::is_dead(){return isDead;}
 void Creature::attack(Creature* b){
+    
+
     b->dec_health( this->get_strength() - b->get_shield());
+    if (  this->get_strength() - b->get_shield() > 0  ){
+        cout<<this->id << " attacked ["<<b->id<<"]"<<endl;}
+    else {
+        cout<<this->id << " attacked ["<<b->id<<"] no damage dealt"<<endl;
+    }
 };
+void Creature::heal(Creature* b){
+    b->inc_health(1);
+    this->dec_potions();
+     cout<<this->id << " healed ["<<b->id<<"]"<<endl;
+};
+
 bool Creature :: isCorpse(){ 
     if(health<=0){
         isDead = true;
@@ -132,6 +148,23 @@ bool Creature :: isCorpse(){
     }
         
     return false;}
+bool Creature::try_to_evade(){
+    //we will give 30% chance to escape..
+    double val = (double)rand() / RAND_MAX;
+    if(val < 0.7 ){
+        return false;
+    }else{
+        this->move();
+        cout << this->id <<" escaped .. "<<endl;
+        return true;
+    }
+
+
+}
+
+
+
+
 
 
 Creature::~Creature() {}
@@ -266,6 +299,8 @@ void Avatar::inc_potions(){
     potions++;
 }
 
+
+
 bool Avatar::potion_check(){
     if (map->grid[position.x][position.y].hasPotion){
         inc_potions();
@@ -274,6 +309,10 @@ bool Avatar::potion_check(){
     }
     return false;
 }
+
+
+
+
 
 
 

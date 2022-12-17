@@ -10,8 +10,10 @@
 #define S 115
 #define D 100
 #define A 97
+#define H 104
 #define ENTER 10
 #define PAUSE 32
+#define Health 6
 
 
 //-- Game Class Implementation. --//
@@ -39,20 +41,12 @@ class Game {
         cout<<"|                    GAME STATS                  |"<<endl;
         cout<<"++++++++++++++++++++++++++++++++++++++++++++++++++"<<endl;
 
-        cout<<"Avatar potions : "<<avatar->get_potions()<<endl;
-
+        cout<<"Avatar health: "<<avatar->get_health() <<" , potions : "<<avatar->get_potions()<<endl;
 
         for ( unsigned int i=0; i< beings.size();i++){
-            cout<<beings[i]->get_team()<<"["<<to_string(i)<<"]"<<"::"<< "Hp: "<<beings[i]->get_health()<<"|Pwr: "<<beings[i]->get_strength() <<"|Def: "<<beings[i]->get_shield()<<"|Potions: "<<beings[i]->get_potions()<<"|Dead: "<<beings[i]->is_dead()<<"|"<<endl;
+            cout<<"id: "<<beings[i]->id<<" "<<beings[i]->get_team()<<"["<<to_string(i)<<"]"<<"::"<< "Hp: "<<beings[i]->get_health()<<"|Pwr: "<<beings[i]->get_strength() <<"|Def: "<<beings[i]->get_shield()<<"|Potions: "<<beings[i]->get_potions()<<"|Dead: "<<beings[i]->is_dead()<<"|"<<endl;
         }
     
-
-
-
-
-
-
-
     }
 
 
@@ -113,7 +107,7 @@ class Game {
         //--Create Vampires.
         Creature* temp;
         int max_creatures = (d1*d2)/15;
-        int num_of_creatures =4+rand()%(max_creatures-3);
+        int num_of_creatures =(d1*d2)/30+rand()%(max_creatures-3);
         int vampires_num = num_of_creatures/2;
         for (int  i = 0; i < vampires_num; i++)
         {
@@ -141,40 +135,39 @@ class Game {
     void BeingsEngagement(){
 
         vector<Creature*> neighbors;
-
+        int j = 0;
         for(unsigned int i=0; i<beings.size(); i++){
-        
             neighbors = beings[i]->get_neighbors();
+            if ( neighbors.size() != 0 ){
+                j  = rand() % (int)neighbors.size();
+                cout<<"J :"<<j<<endl;
+            }else{
+                continue;
+            }
+            
 
-            for ( unsigned int j = 0 ; j < neighbors.size(); j++){
-
-                cout<<"ser" << neighbors[j]->get_strength()<<endl;
-
-                //Is he on my team ?
-                if ( beings[i]->get_team() != neighbors[j]->get_team()){
-
-                    
+            //Is he on my team ?
+            if ( beings[i]->get_team() != neighbors[j]->get_team()){
 
                     if ( beings[i]->get_strength() >= neighbors[j]->get_strength() && beings[i]->isDead == false){
                         //Chance to evade..
-                        //neighbors[j]->dec_health( beings[i]->get_strength() - neighbors[j]->get_shield());
-                        beings[i]->attack(neighbors[j]);
-                        if(neighbors[j]->isCorpse()){
-                            int pos = getIndex(neighbors[j]);
-                            beings.erase( beings.begin() + pos);
-
-                        }
-                        
-
-
+                        if ( neighbors[j]->try_to_evade() == false){
+                            beings[i]->attack(neighbors[j]);
+                            if(neighbors[j]->isCorpse()){
+                                int pos = getIndex(neighbors[j]);
+                                beings.erase( beings.begin() + pos);
+                            }
+                        }   
                     }
 
                 }else{
-                    
-
+                    //if neighbor is  int my team 
+                    if (beings[i]->get_potions()>0  && neighbors[j]->get_health() < Health ){
+                        beings[i]->heal(neighbors[j]);
+                    }
                 }
 
-            }
+            
 
             cout<<"size:" <<neighbors.size()<<endl;
 
@@ -205,15 +198,16 @@ class Game {
         
         int move = 0 ;
         bool game_over = false;
+        isDay = true;
+        int count = 0;
 
       
 
         while (game_over == false)
         {
             
-
-
-
+            //Toggle day and night every 4 moves.
+            //if(count%4 ==0 ){if(isDay){isDay=false;}else{isDay=true;}}
 
             // Catch Player's Move.
             switch((move=getchar())) {
@@ -234,6 +228,15 @@ class Game {
                 avatar->move_right();
                 if ( avatar->potion_check() == true ){ spawn_potion();}
   
+                break;
+            case H:
+                if ( isDay == true && avatar->get_team()=='W' && avatar->get_potions() > 0){
+                    //avatar->heal(&beings);
+                }
+                if ( isDay == false && avatar->get_team()=='V' && avatar->get_potions() > 0){
+                    //avatar->heal(&beings);
+                }
+
                 break;
             case ENTER:
                 for(unsigned int i=0; i<beings.size(); i++){

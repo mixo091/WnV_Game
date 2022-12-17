@@ -15,6 +15,7 @@ class Creature
         char type;
         coordinates position;
         int potions;
+        int id;
         int strength;
         int shield;
         int health;
@@ -43,7 +44,9 @@ class Creature
         char get_team();
         vector<Creature*> get_neighbors(); 
         void attack(Creature*); 
+        virtual void heal(Creature* b);
         bool isCorpse();
+        bool try_to_evade();
         //virtual void attack();
         //virtual void heal();
 };
@@ -80,5 +83,6 @@ class Avatar:public Creature{
         bool is_legal_move(coordinates);
         bool potion_check();
         void inc_potions();
+      
         
 };
