@@ -83,6 +83,7 @@ class Avatar:public Creature{
         bool is_legal_move(coordinates);
         bool potion_check();
         void inc_potions();
+        void heal(vector<Creature*>&);
       
         
 };

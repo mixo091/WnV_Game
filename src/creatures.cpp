@@ -115,7 +115,7 @@ void Creature::move_right()
 
 
 int Creature::get_health(){return health;}
-void Creature::inc_health(int x){ health +=x;}
+void Creature::inc_health(int x){ if (health < Health){health +=x;}}
 void Creature::dec_health(int x){if ( x > 0){health-=x;}}
 int Creature::get_shield(){return shield;}
 int Creature::get_strength(){return strength;}
@@ -313,7 +313,22 @@ bool Avatar::potion_check(){
 
 
 
+void Avatar::heal(vector<Creature*>& beings){
 
+    for(unsigned int i=0; i<beings.size(); i++){
+        if ( this->get_team() == 'W' && beings[i]->get_team()=='L'){
+            beings[i]->inc_health(1);
+        }
+        if ( this->get_team() == 'V' && beings[i]->get_team()=='B'){
+            beings[i]->inc_health(1);
+        }
+
+       
+
+    }
+    potions--;
+    
+} 
 
 
 Avatar::~Avatar()

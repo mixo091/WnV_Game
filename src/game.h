@@ -195,19 +195,18 @@ class Game {
 
     void gamePlay(){
 
-        
+        int count = 0;
         int move = 0 ;
         bool game_over = false;
         isDay = true;
-        int count = 0;
-
       
+
+        bool stop_game =false;
 
         while (game_over == false)
         {
             
-            //Toggle day and night every 4 moves.
-            //if(count%4 ==0 ){if(isDay){isDay=false;}else{isDay=true;}}
+           
 
             // Catch Player's Move.
             switch((move=getchar())) {
@@ -230,25 +229,41 @@ class Game {
   
                 break;
             case H:
-                if ( isDay == true && avatar->get_team()=='W' && avatar->get_potions() > 0){
-                    //avatar->heal(&beings);
+                if ( isDay == true && avatar->get_team()=='V' && avatar->get_potions() > 0){
+                    avatar->heal(beings);
+
                 }
-                if ( isDay == false && avatar->get_team()=='V' && avatar->get_potions() > 0){
-                    //avatar->heal(&beings);
+                if ( isDay == false && avatar->get_team()=='W' && avatar->get_potions() > 0){
+                    avatar->heal(beings);
                 }
 
                 break;
             case ENTER:
+
+                if(!stop_game){
                 for(unsigned int i=0; i<beings.size(); i++){
                     beings[i]->move();
                 }
                 BeingsEngagement();
                 ClearScreen();
+                //Toggle day and night every 4 moves.
+                if(count%4 ==0 ){if(isDay){isDay=false;}else{isDay=true;}}
+                if ( isDay == true){ cout<<"[[DayLight]]"<<endl;}else{cout<<"[[DarkNight]]"<<endl;}
+                count++;
                 map->display();
                 break;
+                }
 
             case PAUSE:
-                printStats();
+                if (!stop_game){
+                    stop_game =true;
+                    printStats();
+                    getchar();
+                }else{
+                    stop_game=false;
+                    map->display();
+                    getchar();
+                }
                 break;
 
             default:

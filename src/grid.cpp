@@ -19,6 +19,7 @@ char getLandscape()
     else if (val < 0.95) // trees.
         terrain = tree;
     else // water.
+    
         terrain = water;
 
     return terrain;

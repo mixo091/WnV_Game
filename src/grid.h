@@ -37,6 +37,7 @@ class Grid
     public:
     int d1, d2;
     vector<vector<tile>> grid;
+    bool isDay = true;
     vector<coordinates> land_coor;
 
     // Funcionality //
@@ -46,5 +47,6 @@ class Grid
     void display_tiles();
     ~Grid() ;
     void set_being(Creature*);
+    void setDay(bool x){isDay = x;};
     coordinates get_available_tile_coordinates();
 };
