@@ -163,7 +163,6 @@ void Game::ClearScreen()
 void Game::gamePlay()
 {
 
-    // int move = 0;
     bool game_over = false;
     isDay = true;
     int count = 0;
