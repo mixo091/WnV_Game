@@ -19,7 +19,7 @@ char getLandscape()
     else if (val < 0.95) // trees.
         terrain = tree;
     else // water.
-    
+
         terrain = water;
 
     return terrain;
@@ -78,16 +78,19 @@ void Grid::display()
                 cout << "| ";
             }
             if (grid[i][j].being == NULL)
-            {   
-                if (grid[i][j].hasPotion){
-                    cout <<"P ";
-                }else{
+            {
+                if (grid[i][j].hasPotion)
+                {
+                    cout << "P ";
+                }
+                else
+                {
                     cout << grid[i][j].type << " ";
                 }
             }
             else
             {
-                cout << grid[i][j].being->type << " ";
+                cout << grid[i][j].being->get_team() << " ";
             }
             if (j == d2 - 1)
             {
@@ -114,14 +117,11 @@ void Grid::display_tiles()
         {
             if (grid[i][j].being != NULL)
             {
-                cout << grid[i][j].being->type << " ( " << i << ", " << j << " )" << endl;
+                cout << grid[i][j].being->get_team() << " ( " << i << ", " << j << " )" << endl;
             }
         }
     }
 }
-
-//-- Grid Destructor --//
-Grid::~Grid() { cout << "Grid Destroyed" << endl; }
 
 // Get random available tile for Creature Placement.
 coordinates Grid::get_available_tile_coordinates()
@@ -142,6 +142,25 @@ coordinates Grid::get_available_tile_coordinates()
     return tile;
 }
 
+int Grid::get_d1() { return d1; }
+int Grid::get_d2() { return d2; }
+bool Grid::get_isDay() { return isDay; }
+
+vector<vector<tile>> Grid::get_grid()
+{
+    return grid;
+}
+
+vector<coordinates> Grid::get_land_coor()
+{
+    return land_coor;
+}
+
+//-- Grid Destructor --//
+Grid::~Grid()
+{
+    cout << "Grid Destroyed" << endl;
+}
 /*
 void Grid::set_being(Creature* b){
 

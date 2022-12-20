@@ -25,7 +25,7 @@ void Game::printStats()
 
     for (unsigned int i = 0; i < beings.size(); i++)
     {
-        cout << "id: " << beings[i]->id << " " << beings[i]->get_team() << "[" << to_string(i) << "]"
+        cout << "id: " << beings[i]->get_id() << " " << beings[i]->get_team() << "[" << to_string(i) << "]"
              << "::"
              << "Hp: " << beings[i]->get_health() << "|Pwr: " << beings[i]->get_strength() << "|Def: " << beings[i]->get_shield() << "|Potions: " << beings[i]->get_potions() << "|Dead: " << beings[i]->is_dead() << "|" << endl;
     }
@@ -40,7 +40,7 @@ void Game::set_being(Creature *b)
     available_pos = map->get_available_tile_coordinates();
     map->grid[available_pos.x][available_pos.y].being = b;
     b->set_coordinates(available_pos);
-    cout << map->grid[available_pos.x][available_pos.y].being->type << endl;
+    cout << map->grid[available_pos.x][available_pos.y].being->get_team() << endl;
 }
 
 int Game::getIndex(Creature *b)
@@ -124,7 +124,7 @@ void Game::BeingsEngagement()
         if (beings[i]->get_team() != neighbors[j]->get_team())
         {
 
-            if (beings[i]->get_strength() >= neighbors[j]->get_strength() && beings[i]->isDead == false)
+            if (beings[i]->get_strength() >= neighbors[j]->get_strength() && beings[i]->is_dead() == false)
             {
                 // Chance to evade..
                 if (neighbors[j]->try_to_evade() == false)
@@ -163,28 +163,15 @@ void Game::ClearScreen()
 void Game::gamePlay()
 {
 
+    int count = 0;
     bool game_over = false;
     isDay = true;
-    int count = 0;
+    bool stop_game = false;
 
     while (game_over == false)
     {
-
-        // Toggle day and night every 4 moves.
-        if (count % 4 == 0)
-        {
-            if (isDay)
-            {
-                isDay = false;
-            }
-            else
-            {
-                isDay = true;
-            }
-        }
-
         // Catch Player's Move.
-        switch ((getchar()))
+        switch (getchar())
         {
         case W:
             avatar->move_up();
@@ -206,7 +193,6 @@ void Game::gamePlay()
             {
                 spawn_potion();
             }
-
             break;
         case D:
             avatar->move_right();
@@ -214,32 +200,64 @@ void Game::gamePlay()
             {
                 spawn_potion();
             }
-
             break;
         case H:
-            if (isDay == true && avatar->get_team() == 'W' && avatar->get_potions() > 0)
+            if (isDay == true && avatar->get_team() == 'V' && avatar->get_potions() > 0)
             {
-                // avatar->heal(&beings);
+                avatar->heal(beings);
             }
-            if (isDay == false && avatar->get_team() == 'V' && avatar->get_potions() > 0)
+            if (isDay == false && avatar->get_team() == 'W' && avatar->get_potions() > 0)
             {
-                // avatar->heal(&beings);
+                avatar->heal(beings);
             }
             break;
         case ENTER:
-            for (unsigned int i = 0; i < beings.size(); i++)
+            if (!stop_game)
             {
-                beings[i]->move();
+                for (unsigned int i = 0; i < beings.size(); i++)
+                {
+                    beings[i]->move();
+                }
+                BeingsEngagement();
+                ClearScreen();
+                // Toggle day and night every 4 moves.
+                if (count % 4 == 0)
+                {
+                    if (isDay)
+                    {
+                        isDay = false;
+                    }
+                    else
+                    {
+                        isDay = true;
+                    }
+                }
+                if (isDay == true)
+                {
+                    cout << "[[DayLight]]" << endl;
+                }
+                else
+                {
+                    cout << "[[DarkNight]]" << endl;
+                }
+                count++;
+                map->display();
+                break;
             }
-            BeingsEngagement();
-            ClearScreen();
-            map->display();
-            break;
-
         case PAUSE:
-            printStats();
+            if (!stop_game)
+            {
+                stop_game = true;
+                printStats();
+                getchar();
+            }
+            else
+            {
+                stop_game = false;
+                map->display();
+                getchar();
+            }
             break;
-
         default:
             break;
         }

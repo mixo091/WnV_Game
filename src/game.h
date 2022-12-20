@@ -19,14 +19,13 @@
 
 class Game
 {
-
-public:
     // Attributes
     vector<Creature *> beings;
     Avatar *avatar;
     Grid *map;
     bool isDay;
 
+public:
     // Methods
     Game(int, int, char);
     ~Game();
