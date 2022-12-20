@@ -16,7 +16,6 @@ void Game::spawn_potion()
 
 void Game::printStats()
 {
-    ClearScreen();
     cout << "++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
     cout << "|                    GAME STATS                  |" << endl;
     cout << "++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
@@ -127,7 +126,7 @@ void Game::BeingsEngagement()
             if (beings[i]->get_strength() >= neighbors[j]->get_strength() && beings[i]->is_dead() == false)
             {
                 // Chance to evade..
-                if (neighbors[j]->try_to_evade() == false)
+                if (neighbors[j]->try_to_evade(get_random_move(neighbors[j])) == false)
                 {
                     beings[i]->attack(neighbors[j]);
                     if (neighbors[j]->isCorpse())
@@ -160,47 +159,67 @@ void Game::ClearScreen()
     cout << string(100, '\n');
 }
 
+int Game::get_random_move(Creature *b)
+{
+    if (b->get_team() == 'L')
+    {
+        return rand() % 5;
+    }
+    else if (b->get_team() == 'B')
+    {
+        return rand() % 9;
+    }
+    return 0;
+}
+
 void Game::gamePlay()
 {
 
     int count = 0;
+    int next_move = 0;
     bool game_over = false;
+    int V_num;
+    int W_num;
     isDay = true;
     bool stop_game = false;
 
     while (game_over == false)
     {
         // Catch Player's Move.
-        switch (getchar())
+        next_move = getchar();
+        switch (next_move)
         {
         case W:
-            avatar->move_up();
-            if (avatar->potion_check() == true)
-            {
-                spawn_potion();
-            }
-            break;
         case S:
-            avatar->move_down();
-            if (avatar->potion_check() == true)
-            {
-                spawn_potion();
-            }
-            break;
         case A:
-            avatar->move_left();
-            if (avatar->potion_check() == true)
-            {
-                spawn_potion();
-            }
-            break;
         case D:
-            avatar->move_right();
+            avatar->move(next_move);
             if (avatar->potion_check() == true)
             {
                 spawn_potion();
             }
             break;
+        // case S:
+        //     avatar->move_down();
+        //     if (avatar->potion_check() == true)
+        //     {
+        //         spawn_potion();
+        //     }
+        //     break;
+        // case A:
+        //     avatar->move_left();
+        //     if (avatar->potion_check() == true)
+        //     {
+        //         spawn_potion();
+        //     }
+        //     break;
+        // case D:
+        //     avatar->move_right();
+        //     if (avatar->potion_check() == true)
+        //     {
+        //         spawn_potion();
+        //     }
+        //     break;
         case H:
             if (isDay == true && avatar->get_team() == 'V' && avatar->get_potions() > 0)
             {
@@ -216,7 +235,7 @@ void Game::gamePlay()
             {
                 for (unsigned int i = 0; i < beings.size(); i++)
                 {
-                    beings[i]->move();
+                    beings[i]->move(get_random_move(beings[i]));
                 }
                 BeingsEngagement();
                 ClearScreen();
@@ -262,10 +281,30 @@ void Game::gamePlay()
             break;
         }
 
+        // check if game is over
+        V_num = 0;
+        W_num = 0;
+        for (unsigned int i = 0; i < beings.size(); i++)
+        {
+            if (beings[i]->get_team() == 'L')
+            {
+                W_num++;
+            }
+            else if (beings[i]->get_team() == 'B')
+            {
+                V_num++;
+            }
+        }
+        if (W_num == 0 || V_num == 0)
+        {
+            game_over = true;
+        }
         // if user quits or a team id dead.
         // break;
     }
 
+    cout << "GAME OVER" << endl;
+    printStats();
     return;
 }
 

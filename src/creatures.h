@@ -34,7 +34,7 @@ public:
     void move_down();
     void move_left();
     void move_right();
-    virtual void move();
+    virtual void move(int) = 0;
     int get_id();
     int get_health();
     int get_shield();
@@ -49,7 +49,7 @@ public:
     void attack(Creature *);
     virtual void heal(Creature *b);
     bool isCorpse();
-    bool try_to_evade();
+    bool try_to_evade(int);
     // virtual void attack();
     // virtual void heal();
 };
@@ -63,7 +63,7 @@ public: // Kinountai kai diagonia
     void move_up_right();
     void move_down_left();
     void move_down_right();
-    void move();
+    void move(int);
 };
 
 class Werewolf : public Creature
@@ -71,7 +71,7 @@ class Werewolf : public Creature
 public:
     Werewolf(Grid *, char, coordinates, int, int, int);
     ~Werewolf();
-    void move();
+    void move(int);
 };
 
 class Avatar : public Creature
@@ -83,4 +83,5 @@ public:
     bool potion_check();
     void inc_potions();
     void heal(vector<Creature *> &);
+    void move(int);
 };

@@ -13,7 +13,7 @@
 #define H 104
 #define ENTER 10
 #define PAUSE 32
-#define Health 6
+#define Health 2
 
 //-- Game Class Implementation. --//
 
@@ -37,4 +37,5 @@ public:
     void BeingsEngagement();
     void ClearScreen(); // Function to Clear Game Screen.
     void gamePlay();
+    int get_random_move(Creature *);
 };

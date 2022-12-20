@@ -3,7 +3,11 @@
 #include "./creatures.h"
 #include "./grid.h"
 #include <string>
-#define Health 6
+#define W 119
+#define S 115
+#define D 100
+#define A 97
+#define Health 2
 
 using namespace std;
 int counter = 0;
@@ -46,30 +50,21 @@ bool Creature::is_legal_move(coordinates pos)
     return false;
 }
 
-void Creature::move()
-{
-}
-
 vector<Creature *> Creature::get_neighbors()
 {
 
     coordinates neighbor_tiles[] = {{position.x - 1, position.y}, {position.x + 1, position.y}, {position.x, position.y + 1}, {position.x, position.y - 1}};
     vector<Creature *> neighbors;
 
-    cout << "ok1" << endl;
-
     for (int i = 0; i < 4; i++)
     {
 
         if (!((neighbor_tiles[i].x < 0 || neighbor_tiles[i].x > map->d1 - 1) || (neighbor_tiles[i].y < 0 || neighbor_tiles[i].y > map->d2 - 1)) && map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being != NULL && map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being->type != 'W' && map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being->type != 'V')
         {
-            cout << "exee geitona" << endl;
             neighbors.push_back(map->grid[neighbor_tiles[i].x][neighbor_tiles[i].y].being);
             // cout<<"ser " <<neighbors[i]->get_strength()<<endl;
         }
     }
-
-    cout << "ok2" << endl;
 
     return neighbors;
 }
@@ -132,6 +127,7 @@ int Creature::get_strength() { return strength; }
 int Creature::get_potions() { return potions; }
 void Creature::dec_potions() { potions -= 1; }
 bool Creature::is_dead() { return isDead; }
+
 void Creature::attack(Creature *b)
 {
 
@@ -164,7 +160,7 @@ bool Creature ::isCorpse()
 
     return false;
 }
-bool Creature::try_to_evade()
+bool Creature::try_to_evade(int next_move)
 {
     // we will give 30% chance to escape..
     double val = (double)rand() / RAND_MAX;
@@ -174,7 +170,7 @@ bool Creature::try_to_evade()
     }
     else
     {
-        this->move();
+        this->move(next_move);
         cout << this->id << " escaped .. " << endl;
         return true;
     }
@@ -215,10 +211,9 @@ void Vampire::move_down_left()
     move_to_tile(wanted_move);
 }
 
-void Vampire::move()
+void Vampire::move(int next_move)
 {
-    int prob = rand() % 9;
-    switch (prob)
+    switch (next_move)
     {
     case 0:
         move_up();
@@ -260,10 +255,9 @@ Werewolf::~Werewolf()
 {
 }
 
-void Werewolf::move()
+void Werewolf::move(int next_move)
 {
-    int prob = rand() % 5;
-    switch (prob)
+    switch (next_move)
     {
     case 0:
         move_up();
@@ -335,6 +329,49 @@ void Avatar::heal(vector<Creature *> &beings)
     }
     potions--;
 }
+
+void Avatar::move(int next_move)
+{
+    if (next_move == W)
+    {
+        move_up();
+    }
+    else if (next_move == S)
+    {
+        move_down();
+    }
+    else if (next_move == A)
+    {
+        move_left();
+    }
+    else if (next_move == D)
+    {
+        move_right();
+    }
+    return;
+}
+// case S:
+//     avatar->move_down();
+//     if (avatar->potion_check() == true)
+//     {
+//         spawn_potion();
+//     }
+//     break;
+// case A:
+//     avatar->move_left();
+//     if (avatar->potion_check() == true)
+//     {
+//         spawn_potion();
+//     }
+//     break;
+// case D:
+//     avatar->move_right();
+//     if (avatar->potion_check() == true)
+//     {
+//         spawn_potion();
+//     }
+//     break;
+// }
 
 Avatar::~Avatar()
 {
