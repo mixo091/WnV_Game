@@ -24,10 +24,28 @@ void Game::printStats()
 
     for (unsigned int i = 0; i < beings.size(); i++)
     {
-        cout << "id: " << beings[i]->get_id() << " " << beings[i]->get_team() << "[" << to_string(i) << "]"
-             << "::"
-             << "Hp: " << beings[i]->get_health() << "|Pwr: " << beings[i]->get_strength() << "|Def: " << beings[i]->get_shield() << "|Potions: " << beings[i]->get_potions() << "|Dead: " << beings[i]->is_dead() << "|" << endl;
+        cout << "id: " << beings[i]->get_id() << " -> " << beings[i]->get_team() << "::"
+             << "Hp: " << beings[i]->get_health() << "|Pwr: " << beings[i]->get_strength() << "|Def: " << beings[i]->get_shield() << "|Potions: " << beings[i]->get_potions() << "|" << endl;
     }
+}
+
+void Game::display_alive_creatures()
+{
+    int V_num = 0;
+    int W_num = 0;
+    for (unsigned int i = 0; i < beings.size(); i++)
+    {
+        if (beings[i]->get_team() == 'L')
+        {
+            W_num++;
+        }
+        else if (beings[i]->get_team() == 'B')
+        {
+            V_num++;
+        }
+    }
+    cout << "Number of vampires : " << V_num << endl;
+    cout << "Number of Werewolves : " << W_num << endl;
 }
 
 void Game::set_being(Creature *b)
@@ -39,7 +57,7 @@ void Game::set_being(Creature *b)
     available_pos = map->get_available_tile_coordinates();
     map->grid[available_pos.x][available_pos.y].being = b;
     b->set_coordinates(available_pos);
-    cout << map->grid[available_pos.x][available_pos.y].being->get_team() << endl;
+    // cout << map->grid[available_pos.x][available_pos.y].being->get_team() << endl;
 }
 
 int Game::getIndex(Creature *b)
@@ -73,7 +91,7 @@ void Game::initializeGame(int d1, int d2, char team)
     coordinates avatar_pos{0, 0};
     this->avatar = new Avatar(map, team, avatar_pos, 1, 1, 1);
     // avatar_pos = map->get_available_tile_coordinates();
-    cout << avatar_pos.x << " , " << avatar_pos.y << endl;
+    // cout << avatar_pos.x << " , " << avatar_pos.y << endl;
     // map->setBeing(avatar_pos, avatar);
     set_being(avatar);
 
@@ -199,27 +217,6 @@ void Game::gamePlay()
                 spawn_potion();
             }
             break;
-        // case S:
-        //     avatar->move_down();
-        //     if (avatar->potion_check() == true)
-        //     {
-        //         spawn_potion();
-        //     }
-        //     break;
-        // case A:
-        //     avatar->move_left();
-        //     if (avatar->potion_check() == true)
-        //     {
-        //         spawn_potion();
-        //     }
-        //     break;
-        // case D:
-        //     avatar->move_right();
-        //     if (avatar->potion_check() == true)
-        //     {
-        //         spawn_potion();
-        //     }
-        //     break;
         case H:
             if (isDay == true && avatar->get_team() == 'V' && avatar->get_potions() > 0)
             {
@@ -268,6 +265,7 @@ void Game::gamePlay()
             {
                 stop_game = true;
                 printStats();
+                display_alive_creatures();
                 getchar();
             }
             else

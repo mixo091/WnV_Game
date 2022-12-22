@@ -161,14 +161,3 @@ Grid::~Grid()
 {
     cout << "Grid Destroyed" << endl;
 }
-/*
-void Grid::set_being(Creature* b){
-
-
-    coordinates available_pos{0,0};
-    available_pos = this->get_available_tile_coordinates();
-    grid[available_pos.x][available_pos.y].being = b;
-    grid[available_pos.x][available_pos.y].type =  b->type;
-
-
-}*/

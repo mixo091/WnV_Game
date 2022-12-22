@@ -38,4 +38,5 @@ public:
     void ClearScreen(); // Function to Clear Game Screen.
     void gamePlay();
     int get_random_move(Creature *);
+    void display_alive_creatures();
 };

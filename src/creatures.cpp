@@ -134,18 +134,18 @@ void Creature::attack(Creature *b)
     b->dec_health(this->get_strength() - b->get_shield());
     if (this->get_strength() - b->get_shield() > 0)
     {
-        cout << this->id << " attacked [" << b->id << "]" << endl;
+        // cout << this->id << " attacked [" << b->id << "]" << endl;
     }
     else
     {
-        cout << this->id << " attacked [" << b->id << "] no damage dealt" << endl;
+        // cout << this->id << " attacked [" << b->id << "] no damage dealt" << endl;
     }
 };
 void Creature::heal(Creature *b)
 {
     b->inc_health(1);
     this->dec_potions();
-    cout << this->id << " healed [" << b->id << "]" << endl;
+    // cout << this->id << " healed [" << b->id << "]" << endl;
 };
 
 bool Creature ::isCorpse()
