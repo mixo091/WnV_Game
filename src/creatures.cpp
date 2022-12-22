@@ -7,7 +7,7 @@
 #define S 115
 #define D 100
 #define A 97
-#define Health 2
+#define Health 3
 
 using namespace std;
 int counter = 0;
@@ -19,7 +19,7 @@ Creature::Creature(Grid *g, char t, coordinates pos, int pots, int stren, int sh
     this->id = counter;
     this->position = pos;
     this->potions = rand() % 3;
-    this->strength = 1 + rand() % 3;
+    this->strength = 3 + rand() % 3;
     this->shield = 1 + rand() % 2;
     this->health = Health;
     this->map = g;

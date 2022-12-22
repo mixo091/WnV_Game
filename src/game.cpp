@@ -84,7 +84,7 @@ void Game::initializeGame(int d1, int d2, char team)
 
     // Create Grid-Map.
     map = new Grid(d1, d2);
-    map->display();
+    // map->display();
 
     spawn_potion();
     // Create Player's Avatar.
@@ -98,7 +98,7 @@ void Game::initializeGame(int d1, int d2, char team)
     //--Create Vampires.
     Creature *temp;
     int max_creatures = (d1 * d2) / 15;
-    int num_of_creatures = (d1 * d2) / 30 + rand() % (max_creatures - 3);
+    int num_of_creatures = 2 + rand() % (max_creatures - 3);
     int vampires_num = num_of_creatures / 2;
     for (int i = 0; i < vampires_num; i++)
     {

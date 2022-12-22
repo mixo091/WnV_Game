@@ -13,7 +13,7 @@
 #define H 104
 #define ENTER 10
 #define PAUSE 32
-#define Health 2
+#define Health 3
 
 //-- Game Class Implementation. --//
 
